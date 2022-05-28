@@ -3,10 +3,21 @@ require('express-async-errors')
 
 const express= require('express')
 const app= express()
+
+app.use(express.json())
 //database
 
 const connectDB=require('./db/connect')
+//middleware
+const notFoundMiddleware=require('./middleware/not-found')
+const errorHandlerMiddleware= require('./middleware/error-handler')
 
+app.get('/',(req,res)=>{
+    res.send('e-commerce-api')
+})
+
+app.use(notFoundMiddleware)
+app.use(errorHandlerMiddleware)
 
 
 console.log('E-Commerce API');
