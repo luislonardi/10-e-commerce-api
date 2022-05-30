@@ -19,15 +19,16 @@
 #### Basic Routes and Middleware
 
 - [] setup / GET Route
-- [] setup express.json() middleware
+- [] setup express.json() middleware Allows to have access to the req.body object in json format
 - [] setup 404 and errorHandler middleware
-- [] import 'exress-async-errors' package
+- [] import 'express-async-errors' package
 
 #### 404 vs ErrorHandler Middleware
 
 #### Morgan Pacakge
 
 - [Morgan Package](https://www.npmjs.com/package/morgan)
+It is a great tool that logs the requests along with some other information depending upon its configuration  const morgan=require('morgan')/ app.use(morgan('tiny')) for the simplest form
 
 #### User Model
 
@@ -67,6 +68,7 @@
 
 - [] UserSchema.pre('save') - hook
 - this points to User
+-use the bcrypt library and the mongoose .pre middleware with save event
 - bcrypt.genSalt - number of rounds
 - bcrypt.hash
 
@@ -79,10 +81,12 @@
 - [] restart the server !!!!
 - [] refactor code, create jwt functions in utils
 - [] refactor cookie code
+-use the cookies from express res.cookies(name,value[,options]) see express documentation
 - [] setup func attachCookiesToResponse
 - [] accept payload(res, tokenUser)
 - [] create token, setup cookie
 - [] optionally send back the response
+- for reading back the cookie from the request, use the cookie-parser package as middleware
 
 #### Login Route
 
