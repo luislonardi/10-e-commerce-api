@@ -43,7 +43,7 @@ const login= async (req,res)=>{
     res.status(StatusCodes.CREATED).json({user:tokenUser});
 }
 const logout= async (req,res)=>{
-    //le ponemos un valor ficticio cualquiera y setamos el espires
+    //le ponemos un valor ficticio cualquiera y seteamos el expires
     res.cookie('token','cualquiera',{
         httpOnly:true,
         expires: new Date(Date.now()+ 5*1000),
