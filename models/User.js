@@ -43,7 +43,7 @@ this.password= await bcrypt.hash(this.password,salt);
 
 //use to compare the password
 
-UserSchema.method.comparePassword= async function(candidatePassword){
+UserSchema.methods.comparePassword= async function(candidatePassword){
     const isMatch= await bcrypt.compare(candidatePassword,this.password);
     return isMatch;
 }
