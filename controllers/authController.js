@@ -1,8 +1,7 @@
 const User=require('../models/User');
 const {StatusCodes}= require('http-status-codes');
 const CustomError=require('../errors');
-//const jwt=require('jsonwebtoken');
-const {attachCookiesToResponse}= require('../utils')
+const {attachCookiesToResponse,createTokenUser}= require('../utils')
 
 
 
@@ -15,7 +14,7 @@ const register= async (req,res)=>{
         throw new CustomError.BadRequestError(`Email: ${emailAlreadyExists.email} already exists`)
     }
     const user= await User.create(req.body);
-    const tokenUser={name:user.name,userId:user._id,role:user.role}
+    const tokenUser=createTokenUser(user)
     attachCookiesToResponse({res,user:tokenUser})
     res.status(StatusCodes.CREATED).json({user:tokenUser});
     console.log(req.body)
@@ -35,12 +34,12 @@ const login= async (req,res)=>{
        }
     const isPasswordCorrect=await user.comparePassword(password)
        if(!isPasswordCorrect){
-           throw CustomError.UnauthenticatedError(
+           throw new CustomError.UnauthenticatedError(
             'invalid credentials')
     }
-    const tokenUser={name:user.name,userId:user._id,role:user.role}
+    const tokenUser=createTokenUser(user)
     attachCookiesToResponse({res,user:tokenUser})
-    res.status(StatusCodes.CREATED).json({user:tokenUser});
+    res.status(StatusCodes.OK).json({user:tokenUser});
 }
 const logout= async (req,res)=>{
     //le ponemos un valor ficticio cualquiera y seteamos el expires
