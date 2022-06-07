@@ -23,7 +23,7 @@ const showCurrentUser= async (req,res)=>{
         }
 
 const updateUser= async (req,res)=>{
-    const {email,password}=req.body;
+    const {email,name}=req.body;
     if(!email || !name){
         throw new CustomError.BadRequestError('Please provide all values')
       }
