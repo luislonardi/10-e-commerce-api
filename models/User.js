@@ -37,7 +37,12 @@ var UserSchema = new mongoose.Schema({
 
 //use pre mongoose middleware
 UserSchema.pre('save',async function(){
-    console.log('hello there')
+
+//Ojo:  when updating with save() if I modified the name or the email,
+//the bcrypt will run and change the password so I will not be able to login again
+//to fix this we have to use the isModified() method to check that the bcrypt will run only 
+//if we modify the password
+if(!this.isModified('password')) return;    
 const salt= await bcrypt.genSalt(10);
 this.password= await bcrypt.hash(this.password,salt);
 })
