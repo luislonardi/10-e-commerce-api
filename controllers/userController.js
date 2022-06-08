@@ -1,7 +1,7 @@
 const User=require('../models/User')
 const {StatusCodes}=require('http-status-codes')
 const CustomError=require('../errors')
-const {createTokenUser, attachCookiesToResponse}=require('../utils')
+const {createTokenUser, attachCookiesToResponse,checkPermissions}=require('../utils')
 
 const getAllUsers= async (req,res)=>{
     console.log(req.user)
@@ -14,13 +14,15 @@ const getSingleUser= async (req,res)=>{
     if(!user){
         throw new CustomError.NotFoundError(`the user with id ${req.params.id} doesn't exists`);
      }
-    res.status(StatusCodes.OK).json({user}) 
+     console.log(req.user)
+    //checkPermissions(req.user, user._id)
+    res.status(StatusCodes.OK).json({user})     
     }
 
 const showCurrentUser= async (req,res)=>{
-        res.status(StatusCodes.OK).json({user:req.user})
+     res.status(StatusCodes.OK).json({user:req.user})
         
-        }
+    }
 //update user with user.save()
 const updateUser= async (req,res)=>{
     const {email,name}=req.body;
