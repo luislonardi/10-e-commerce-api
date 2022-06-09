@@ -1,17 +1,19 @@
 const jwt=require('jsonwebtoken');
 
-const createJWT=({payload})=>{
-    const token= jwt.sign(payload,process.env.JWT_SECRET,{
+const createJWT=(user)=>{
+    console.log("el JWT es del payload",user)
+    const token= jwt.sign(user,process.env.JWT_SECRET,{
         expiresIn:process.env.JWT_LIFETIME
     })
   return token;  
 }
 
-const isTokenValid= ({token})=> jwt.verify(token,process.env.JWT_SECRET);
+const isTokenValid= (token)=> jwt.verify(token,process.env.JWT_SECRET);
 
 
-const attachCookiesToResponse=({res,user})=>{
-    const token=createJWT({payload:user})
+const attachCookiesToResponse=(res,tokenUser)=>{
+    
+    const token=createJWT(tokenUser)
     
     
 

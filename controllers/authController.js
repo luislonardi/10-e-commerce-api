@@ -15,10 +15,9 @@ const register= async (req,res)=>{
     }
     const user= await User.create(req.body);
     const tokenUser=createTokenUser(user)
-    attachCookiesToResponse({res,user:tokenUser})
+    attachCookiesToResponse(res,tokenUser)
     res.status(StatusCodes.CREATED).json({user:tokenUser});
-    console.log(req.body)
-    console.log({user:tokenUser})
+    
   }
 
 const login= async (req,res)=>{
@@ -37,8 +36,11 @@ const login= async (req,res)=>{
            throw new CustomError.UnauthenticatedError(
             'invalid credentials')
     }
+    
     const tokenUser=createTokenUser(user)
-    attachCookiesToResponse({res,user:tokenUser})
+    
+
+    attachCookiesToResponse(res,tokenUser)
      res.status(StatusCodes.OK).json({user:tokenUser});
 }
 const logout= async (req,res)=>{
