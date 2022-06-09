@@ -15,7 +15,7 @@ const getSingleUser= async (req,res)=>{
         throw new CustomError.NotFoundError(`the user with id ${req.params.id} doesn't exists`);
      }
      console.log(req.user)
-    //checkPermissions(req.user, user._id)
+    checkPermissions(req.user, user._id)
     res.status(StatusCodes.OK).json({user})     
     }
 
