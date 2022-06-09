@@ -1,8 +1,10 @@
 const Product=require('../models/Product')
 const {StatusCodes}=require('http-status-codes')
 const CustomError=require('../errors')
+//const {}=require('')
 
 const createProduct= async (req,res)=>{
+    
     res.send('create product')
 };
 
