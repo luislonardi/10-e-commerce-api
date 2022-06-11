@@ -1,7 +1,8 @@
 const Product=require('../models/Product')
 const {StatusCodes}=require('http-status-codes')
 const CustomError=require('../errors')
-//const {}=require('')
+const path=require('path') //for moving the image to public/uploads
+
 
 const createProduct= async (req,res)=>{
     req.body.user=req.user.userId;
@@ -47,12 +48,28 @@ const deleteProduct= async (req,res)=>{
     }
     await product.remove();
     res.status(StatusCodes.OK).json({msg:'Success! Product Removed'})
-
-    //res.send('delete product')
 };
 
 const uploadImage= async (req,res)=>{
-    res.send('Upload image')
+    //size and mimetype comes in the req.files object.
+    //to check them use console.log(req.files) an verify the properties
+    console.log(req.files)
+    if(!req.files){
+        throw new CustomError.BadRequestError('No file uploaded')
+    }
+    const productImage=req.files.image;
+    if(!productImage.mimetype.startsWith('image')){
+        throw new CustomError.BadRequestError('Please upload an image')
+       }
+    const maxSize= 1024*1024;
+    if(productImage.size>maxSize){
+        throw new CustomError.BadRequestError('Please upload an image smaller than 1 MB')    
+    }
+    
+    const imagePath= path.join(__dirname,'../public/uploads/' + `${productImage.name}`)
+    await productImage.mv(imagePath)
+    res.status(StatusCodes.OK).json({image:`/uploads/${productImage.name}`})
+    //res.send('Upload image')
 };
 
 module.exports={
