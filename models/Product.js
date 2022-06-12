@@ -1,8 +1,6 @@
 const mongoose = require('mongoose'); 
 //We are using the mongoose validator and the express validator package
-const validator=require('validator')
-//for hashing the password use bcrypt library
-const bcrypt= require('bcryptjs')
+
 
 const ProductSchema= new mongoose.Schema({
     name:{
@@ -67,6 +65,14 @@ const ProductSchema= new mongoose.Schema({
         require:true
     }
 },
-{timestamps:true}
+{timestamps:true,toJSON:{virtuals:true},toObject:{virtuals:true}}
 );
+
+ProductSchema.virtual('reviews',{
+    ref:'Review',
+    localField:'_id',
+    foreignField: 'product',
+    justOne:false,
+    match:{rating:1}
+});
 module.exports=mongoose.model('Product',ProductSchema)
