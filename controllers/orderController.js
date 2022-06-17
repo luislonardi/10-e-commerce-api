@@ -7,7 +7,7 @@ const { findOne } = require('../models/Product')
 
 const fakeStripeAPI= async ({amount,currency})=>{
     const client_secret= 'someRandomValue';
-    return(client_secret,amount);
+    return {client_secret,amount};
 }
 
 const createOrder= async (req,res)=>{
@@ -61,7 +61,7 @@ const createOrder= async (req,res)=>{
     })
     res
       .status(StatusCodes.CREATED)
-      .json({order,clientSecret:order.client_Secret})
+      .json({order,clientSecret:order.clientSecret})
 }
 
 const getAllOrders= async (req,res)=>{
