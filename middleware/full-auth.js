@@ -1,4 +1,4 @@
-const CustomError = require('../errors');
+/* const CustomError = require('../errors');
 const { isTokenValid } = require('../utils/jwt');
 
 const authenticateUser = async (req, res, next) => {
@@ -43,3 +43,4 @@ const authorizeRoles = (...roles) => {
 };
 
 module.exports = { authenticateUser, authorizeRoles };
+ */
